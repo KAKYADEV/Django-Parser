@@ -1,6 +1,7 @@
-from django.urls import path
-from hello import views
+from django.contrib import admin as dj_admin
+from django.urls import path, include
  
 urlpatterns = [
-    path('', views.index, name='home'),
+    path('admin/', dj_admin.site.urls),
+    path('parse/', include('hello.urls')),
 ]
