@@ -7,3 +7,6 @@ class ReqSite(models.Model):
     time_response = models.DateTimeField(auto_now_add=True)
     duration = models.DurationField(null=True, blank=True)
     active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.url
