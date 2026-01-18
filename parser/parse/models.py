@@ -9,4 +9,4 @@ class ReqSite(models.Model):
     active = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.url
+        return f"Сайт - {self.name}, URL - {self.url}"
