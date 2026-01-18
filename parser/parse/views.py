@@ -16,5 +16,5 @@ def req_site_list(request):
         'title' : 'Список запросов',
         'header' : 'Список запросов',
         'site_list': site_list,
-    }
+    }   
     return render(request, 'parse/req_sites_list.html', context)
