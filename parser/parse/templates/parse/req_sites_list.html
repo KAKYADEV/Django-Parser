@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ title }}</title>
+    </head>
+    <body>
+        <h1>{{ header }}</h1>
+        <ul>
+            {% for site in site_list %}
+                <li>{{ site }}</li>
+            {% empty %}
+                <p>Список пуст</p>
+            {% endfor %}
+    </body>
+</html>
