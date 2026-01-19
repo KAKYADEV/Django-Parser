@@ -6,5 +6,12 @@
     </head>
     <body>
         <h1>{{ header }}</h1>
+        <h2>Введите название сайта и URL</h2>
+        <form method="post">
+            {% csrf_token %}
+            <p>Название<br><input name="site_name"></p>
+            <p>URL<br><input name="url"></p>
+            <button type="submit">Отправить</button>
+        </form>
     </body>
 </html>
