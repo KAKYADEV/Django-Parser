@@ -4,6 +4,13 @@ from django.db import models
 from .models import ReqSite
   
 def index(request):
+    if request.method == 'POST':
+        site_name = request.POST.get("site_name")
+        url = request.POST.get("url")
+        if (site_name and url):
+            ReqSite.objects.create(name=site_name, url=url)
+        return redirect('http://127.0.0.1:8000/parse/sites/')
+    
     context = {
         'title': 'Главная страница',
         'header': 'Добро пожаловать на YouParse'
