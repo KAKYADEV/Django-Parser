@@ -12,7 +12,9 @@ def index(request):
     
     context = {
         'title': 'Главная страница',
-        'header': 'Добро пожаловать на YouParse'
+        'header': ['Добро пожаловать на YouParse', 'Создайте новый запрос на парсинг сайта'],
+        'input_paragraph': ['Название сайта', 'URL сайта'],
+        'button': 'Отправить',
     }
     return render(request, 'parse/main_page.html', context)
 
@@ -21,6 +23,7 @@ def req_site_list(request):
     context = {
         'title' : 'Список запросов',
         'header' : 'Список запросов',
+        'empty_message' : 'Список запросов пуст',
         'site_list': site_list,
     }   
     return render(request, 'parse/req_sites_list.html', context)
