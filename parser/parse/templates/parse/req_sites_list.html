@@ -6,12 +6,12 @@
     </head>
     <body>
         <h1>{{ header }}</h1>
-        <ul>
+        <ol>
             {% for site in site_list %}
                 <li>{{ site }}</li>
             {% empty %}
-                <p>Список сайтов пуст</p>
+                <p>{{ empty_message }}</p>
             {% endfor %}
-        </ul>
+        </ol>
     </body>
 </html>
