@@ -9,8 +9,7 @@
         <h2>{{ header.1 }}</h2>
         <form method="post">
             {% csrf_token %}
-            <p>{{ input_paragraph.0 }}<br><input name="site_name"></p>
-            <p>{{ input_paragraph.1 }}<br><input name="url"></p>
+            {{ form.as_p }}
             <button type="submit">{{ button }}</button>
         </form>
     </body>
