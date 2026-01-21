@@ -1,20 +1,23 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import ReqSite
+from .forms import ReqSiteForm
   
 def index(request):
     if request.method == 'POST':
-        site_name = request.POST.get("site_name")
-        url = request.POST.get("url")
-        if (site_name and url):
-            ReqSite.objects.create(name=site_name, url=url)
-        return redirect('http://127.0.0.1:8000/parse/sites/')
+        form = ReqSiteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('http://127.0.0.1:8000/parse/sites/')
+    else:
+        form = ReqSiteForm()
     
     context = {
         'title': 'Главная страница',
         'header': ['Добро пожаловать на YouParse', 'Создайте новый запрос на парсинг сайта'],
         'input_paragraph': ['Название сайта', 'URL сайта'],
         'button': 'Отправить',
+        'form': form,
     }
     return render(request, 'parse/main_page.html', context)
 
