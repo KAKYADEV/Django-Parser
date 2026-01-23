@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ title }}</title>
+    </head>
+    <body>
+        <h1>{{ header }}</h1>
+        <p>Название сайта: {{ site.name }}</p>
+        <p>URL сайта: {{ site.url }}</p>
+        <button type="button">Запустить парсинг</button>
+        <p></p>
+        <a href="{% url 'req_site_list' %}">К списку запросов</a>
+    </body>
+</html>
