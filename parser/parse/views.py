@@ -8,7 +8,8 @@ def index(request):
         form = ReqSiteForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('http://127.0.0.1:8000/parse/sites/')
+            site_id = form.instance.id
+            return req_site_detail(request, pk=site_id)
     else:
         form = ReqSiteForm()
     
@@ -30,3 +31,12 @@ def req_site_list(request):
         'site_list': site_list,
     }   
     return render(request, 'parse/req_sites_list.html', context)
+
+def req_site_detail(request, pk):
+    site = ReqSite.objects.get(pk=pk)
+    context = {
+        'title': f'Парсинг {site.name}',
+        'header': f'Запрос на парсинг сайта "{site.name}", URL: {site.url}',
+        'site': site,
+    }
+    return render(request, 'parse/req_site_detail.html', context)
