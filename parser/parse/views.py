@@ -9,7 +9,7 @@ def index(request):
         if form.is_valid():
             form.save()
             site_id = form.instance.id
-            return req_site_detail(request, pk=site_id)
+            return redirect('req_site_detail', pk=site_id)
     else:
         form = ReqSiteForm()
     
