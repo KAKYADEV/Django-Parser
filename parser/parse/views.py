@@ -3,10 +3,12 @@ from django.shortcuts import render, redirect
 from .models import ReqSite
 from .forms import ReqSiteForm
   
+  
 def index(request):
     if request.method == 'POST':
         form = ReqSiteForm(request.POST)
         if form.is_valid():
+            form.save(commit=False)
             form.save()
             site_id = form.instance.id
             return redirect('req_site_detail', pk=site_id)
