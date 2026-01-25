@@ -8,8 +8,10 @@
         <h1>{{ header }}</h1>
         <p>Название сайта: {{ site.name }}</p>
         <p>URL сайта: {{ site.url }}</p>
-        <button type="button">Запустить парсинг</button>
-        <p></p>
+        <form method="post" action="{% url 'start_parse' site.id %}">
+            {% csrf_token %}
+            <button type="submit">Запустить парсинг</button>
+        </form>
         <a href="{% url 'req_site_list' %}">К списку запросов</a>
     </body>
 </html>
