@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ title }}</title>
+    </head>
+    <body>
+        <h2>{{ header }}</h2>
+
+        {% if site.status == 'processing' %}
+            <meta http-equiv="refresh" content="5">
+        {% endif %}
+
+        {% if site.status == 'done' %}
+            <script>
+                window.location.href = "{% url 'req_site_detail' site.id %}"
+            </script>
+        {% endif %}
+    </body>
+</html>
