@@ -1,4 +1,5 @@
 from parse.models import ReqSite
+import time
 
 
 class Parser:
@@ -9,6 +10,7 @@ class Parser:
         site = ReqSite.objects.get(pk=self.site_id)
 
         try:
+            time.sleep(15)  # Симуляция времени парсинга
             print(f"Запущен парсинг сайта: {site.url}")
             # Здесь будет логика парсинга сайта
 
