@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import ReqSite
 from .forms import ReqSiteForm
-from .services.parser import Parser
+from .services.runner import start_background_parse
   
   
 def index(request):
@@ -50,9 +50,8 @@ def start_parse(request, pk):
         site.status = ReqSite.Site.PROCESSING
         site.save(update_fields=['status'])
 
-        parser = Parser(pk)
+        start_background_parse(pk)
 
-        parser.run()
     else:
         site = ReqSite.objects.get(pk=pk)
 
@@ -62,6 +61,4 @@ def start_parse(request, pk):
         'site': site,
     }
 
-    # Логика запуска парсинга сайта site.url
-    # Например, можно вызвать фоновую задачу или скрипт здесь
     return render(request, 'parse/parse_processing.html', context)
