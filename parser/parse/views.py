@@ -2,8 +2,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import ReqSite
 from .forms import ReqSiteForm
-from .services.runner import start_background_parse
-  
+from .tasks import start_background_parse
+
   
 def index(request):
     if request.method == 'POST':
@@ -50,7 +50,7 @@ def start_parse(request, pk):
         site.status = ReqSite.Site.PROCESSING
         site.save(update_fields=['status'])
 
-        start_background_parse(pk)
+        start_background_parse.delay(pk)
 
     else:
         site = ReqSite.objects.get(pk=pk)
