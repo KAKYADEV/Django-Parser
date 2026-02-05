@@ -7,3 +7,4 @@ def start_background_parse(pk):
     print(f"Задача парсинга запущена для сайта с ID: {pk}")
     parser = Parser(pk)
     parser.run()
+    return 'success'
