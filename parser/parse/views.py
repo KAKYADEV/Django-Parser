@@ -50,7 +50,10 @@ def start_parse(request, pk):
         site.status = ReqSite.Site.PROCESSING
         site.save(update_fields=['status'])
 
-        start_background_parse.delay(pk)
+        task = start_background_parse.delay(pk)
+
+        res = task.get()
+        print(f"Результат задачи: {res}")
 
     else:
         site = ReqSite.objects.get(pk=pk)
