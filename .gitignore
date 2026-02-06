@@ -216,4 +216,4 @@ staticfiles/
 .env.local
 __pycache__/
 *.pyc
-
+parser/parse/migrations/
