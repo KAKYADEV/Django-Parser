@@ -26,3 +26,12 @@ class ReqSite(models.Model):
 
     def __str__(self):
         return f"Сайт - {self.name}, URL - {self.url}"
+    
+class ParsedData(models.Model):
+    site = models.ForeignKey(ReqSite, on_delete=models.CASCADE, related_name='parsed_data')
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    keywords = models.TextField()
+
+    def __str__(self):
+        return f"Данные для сайта - {self.site.name}"
