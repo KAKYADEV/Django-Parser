@@ -1,4 +1,3 @@
-from parse.models import *
 import time
 
 
