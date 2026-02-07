@@ -11,7 +11,7 @@ def start_background_parse(pk):
     site.status = ReqSite.Site.PROCESSING
     site.save(update_fields=['status'])
 
-    parser = Parser(pk)
+    parser = Parser(site.url)
     result = parser.run()
 
     ParsedData.objects.create(
