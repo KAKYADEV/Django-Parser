@@ -45,15 +45,10 @@ def req_site_detail(request, pk):
     return render(request, 'parse/req_site_detail.html', context)
 
 def start_parse(request, pk):
+    site = ReqSite.objects.get(pk=pk)
+    
     if request.method == 'POST':
-        site = ReqSite.objects.get(pk=pk)
-        site.status = ReqSite.Site.PROCESSING
-        site.save(update_fields=['status'])
-
         start_background_parse.delay(pk)
-
-    else:
-        site = ReqSite.objects.get(pk=pk)
 
     context = {
         'title': f'Парсинг {site.name} в работе...',
