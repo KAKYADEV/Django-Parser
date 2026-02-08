@@ -1,4 +1,6 @@
 import time
+from bs4 import BeautifulSoup
+from selenium import webdriver
 
 
 class Parser:
@@ -8,8 +10,16 @@ class Parser:
     def run(self):
 
         try:            
-            print(f"Запущен парсинг сайта: {self.site_url}")  
-            time.sleep(15)  # Здесь будет логика парсинга сайта
+            print(f"Запущен парсинг сайта: {self.site_url}") 
+            options = webdriver.ChromeOptions()
+            options.add_experimental_option('excludeSwitches', ['enable-logging'])
+            driver = webdriver.Chrome(options=options)
+            driver.get(self.site_url)
+            html_source = driver.page_source
+            soup = BeautifulSoup(html_source, "html.parser") 
+
+            title = soup.find('title')
+            title = title.text
            
         except Exception as e:
             #site.status = ReqSite.Site.ERROR
@@ -18,7 +28,7 @@ class Parser:
         
         finally:
             return {
-                'title': f"{self.site_url}",
+                'title': title,
                 'description': f"Описание для {self.site_url}",
                 'keywords': f"Ключевые слова для {self.site_url}",
             }
