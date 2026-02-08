@@ -20,6 +20,8 @@ class Parser:
 
             title = soup.find('title')
             title = title.text
+
+            driver.quit()
            
         except Exception as e:
             #site.status = ReqSite.Site.ERROR
