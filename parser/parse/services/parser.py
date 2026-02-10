@@ -1,6 +1,7 @@
 import time
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from scrap import *
 
 
 class Parser:
@@ -18,10 +19,14 @@ class Parser:
             html_source = driver.page_source
             soup = BeautifulSoup(html_source, "html.parser") 
 
-            title = soup.find('title')
-            title = title.text
+            title = get_title(soup)
 
-            driver.quit()
+            print("Парсер отработал")
+            return {
+                'title': title,
+                'description': f"Описание для {self.site_url}",
+                'keywords': f"Ключевые слова для {self.site_url}",
+            }
            
         except Exception as e:
             #site.status = ReqSite.Site.ERROR
@@ -29,10 +34,4 @@ class Parser:
             raise e
         
         finally:
-            return {
-                'title': title,
-                'description': f"Описание для {self.site_url}",
-                'keywords': f"Ключевые слова для {self.site_url}",
-            }
-
-        
+            driver.quit()
