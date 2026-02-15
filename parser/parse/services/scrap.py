@@ -1,8 +1,13 @@
 from bs4 import BeautifulSoup
+from exceptions import *
 
 
 def get_title(soup):
-    title = soup.find('title')
-    title = title.text
-
-    return title
+    try:
+        title = soup.find('title')
+        title = title.text
+    except Exception as e:
+        print(e)
+        raise TagNameNotExist from e
+    else:
+        return title
