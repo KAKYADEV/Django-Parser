@@ -1,16 +1,29 @@
 from celery import shared_task
 from parse.services.parser import Parser
 from parse.models import *
-from services.exceptions import *
+from .services.exceptions import *
+import logging
+
+
+tasks_logger = logging.getLogger(__name__)
+tasks_logger.setLevel(logging.INFO)
+
+tasks_handler = logging.FileHandler(f"{__name__}.log", mode='w', encoding='utf-8')
+tasks_formatter = logging.Formatter("%(name)s %(asctime)s %(levelname)s %(message)s")
+
+tasks_handler.setFormatter(tasks_formatter)
+tasks_logger.addHandler(tasks_handler)
+
+logging.basicConfig(encoding='utf-8')
 
 
 @shared_task
 def start_background_parse(pk):
-    print(f"Задача парсинга запущена для сайта с ID: {pk}")
-
     site = ReqSite.objects.get(pk=pk)
     site.status = ReqSite.Site.PROCESSING
     site.save(update_fields=['status'])
+
+    tasks_logger.info(f"Задача парсинга запущена для сайта с ID: {pk}")
 
     try:
         parser = Parser(site.url)
@@ -18,10 +31,11 @@ def start_background_parse(pk):
     except ParserError as e:
         site.status = ReqSite.Site.ERROR
         site.save(update_fields=['status'])
-        print(f'Ошибка {e} при парсинге сайта {site.name}')
+        tasks_logger.exception("ParserError", exc_info=True)
     except Exception as e:
         site.status = ReqSite.Site.ERROR
         site.save(update_fields=['status'])
+        tasks_logger.exception(f"{e}", exc_info=True)
         raise
     else:
         ParsedData.objects.create(
@@ -33,5 +47,6 @@ def start_background_parse(pk):
 
         site.status = ReqSite.Site.DONE
         site.save(update_fields=['status'])
+        tasks_logger.info(f"Задача парсинга выполнена для сайта с ID: {pk}")
 
         return 'success'
