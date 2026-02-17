@@ -30,9 +30,10 @@ class Parser:
             html_source = driver.page_source
             soup = BeautifulSoup(html_source, "html.parser")
 
-            parser_logger.info("Запускается поиск title")
-
             title = get_title(soup)
+            description = get_description(soup)
+            keywords = get_keywords(soup)
+
         except ParserError as e:
             parser_logger.exception("ParserError", exc_info=True)
             raise
@@ -40,8 +41,8 @@ class Parser:
             parser_logger.info("Парсер отработал, данные получены")
             return {
                 'title': title,
-                'description': f"Описание для {self.site_url}",
-                'keywords': f"Ключевые слова для {self.site_url}",
+                'description': description,
+                'keywords': keywords,
             }
         finally:
             driver.quit()
