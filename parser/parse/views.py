@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.views.generic import ListView, DetailView
 from .models import ReqSite
 from .forms import ReqSiteForm
 from .tasks import start_background_parse
@@ -25,15 +26,18 @@ def index(request):
     }
     return render(request, 'parse/main_page.html', context)
 
-def req_site_list(request):
-    site_list = ReqSite.objects.all()
-    context = {
-        'title' : 'Список запросов',
-        'header' : 'Список запросов',
-        'empty_message' : 'Список запросов пуст',
-        'site_list': site_list,
-    }   
-    return render(request, 'parse/req_sites_list.html', context)
+class ReqSiteListView(ListView):
+
+    model = ReqSite
+    template_name = 'parse/req_sites_list.html'
+    context_object_name = 'sites'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Список запросов'
+        context['header'] = 'Список запросов'
+        context['empty_message'] = 'Список запросов пуст'
+        return context
 
 def req_site_detail(request, pk):
     site = ReqSite.objects.get(pk=pk)
