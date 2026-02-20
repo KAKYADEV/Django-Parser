@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
-from .models import ReqSite
+from .models import ReqSite, ParsedData
 from .forms import ReqSiteForm
 from .tasks import start_background_parse
 
@@ -61,3 +61,20 @@ def start_parse(request, pk):
     }
 
     return render(request, 'parse/parse_processing.html', context)
+
+class ParsedDataDetailView(DetailView):
+    model = ParsedData
+    template_name = 'parse/parsed_data_detail.html'
+    context_object_name = 'parsed_data'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'Результаты парсинга'
+        context['header'] = f'Результаты парсинга для сайта "{self.object.site.name}"'
+        context['time_start'] = self.object.site.time_request
+        context['time_end'] = self.object.time_response
+        context['duration_time'] = self.object.duration_time
+        context['site_title'] = self.object.title
+        context['site_description'] = self.object.description
+        context['site_keywords'] = self.object.keywords
+        return context
