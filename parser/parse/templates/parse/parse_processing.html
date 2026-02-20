@@ -13,7 +13,7 @@
 
         {% if site.status == 'done' %}
             <script>
-                window.location.href = "{% url 'req_site_detail' site.id %}"
+                window.location.href = "{% url 'parsed_data_detail' site.parsed_data.last.id %}"
             </script>
         {% endif %}
     </body>
