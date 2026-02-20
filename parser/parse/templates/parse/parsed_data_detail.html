@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ title }}</title>
+    </head>
+    <body>
+        <h1>{{ header }}</h1>
+        <list>
+            <li><strong>Сайт:</strong> {{ parsed_data.site.name }}</li>
+            <li><strong>URL:</strong> {{ parsed_data.site.url }}</li>
+            <li><strong>Время запроса:</strong> {{ time_start }}</li>
+            <li><strong>Время ответа:</strong> {{ time_end }}</li>
+            <li><strong>Длительность:</strong> {{ duration_time }}</li>
+            <li><strong>Заголовок страницы:</strong> {{ site_title }}</li>
+            <li><strong>Описание страницы:</strong> {{ site_description }}</li>
+            <li><strong>Ключевые слова:</strong> {{ site_keywords }}</li>
+        </list>
+        <a href="{% url 'req_site_list' %}">К списку запросов</a>
+    </body>
+</html>
