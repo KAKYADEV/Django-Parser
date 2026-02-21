@@ -1,4 +1,5 @@
 from django.db import models
+from django.template.defaultfilters import slugify
 
 class ReqSite(models.Model):
 
@@ -11,6 +12,7 @@ class ReqSite(models.Model):
 
 
     name = models.CharField(max_length=31)
+    slug = models.SlugField(null=True, default=None)
     url = models.URLField()
 
     status = models.CharField(
@@ -24,6 +26,11 @@ class ReqSite(models.Model):
 
     def __str__(self):
         return f"Сайт - {self.name}, URL - {self.url}"
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        return super().save(*args, **kwargs)
     
 class ParsedData(models.Model):
     site = models.ForeignKey(ReqSite, on_delete=models.CASCADE, related_name='parsed_data')
