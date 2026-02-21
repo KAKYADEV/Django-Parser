@@ -1,30 +1,49 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, FormView
 from .models import ReqSite, ParsedData
 from .forms import ReqSiteForm
 from .tasks import start_background_parse
 
-  
-def index(request):
-    if request.method == 'POST':
-        form = ReqSiteForm(request.POST)
-        if form.is_valid():
-            form.save(commit=False)
-            form.save()
-            site_id = form.instance.id
-            return redirect('req_site_detail', pk=site_id)
-    else:
-        form = ReqSiteForm()
+
+class MainPageView(FormView):
+    template_name = 'parse/main_page.html'
+    form_class = ReqSiteForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Главная страница'
+        context['header'] = ['Добро пожаловать на YouParse', 'Создайте новый запрос на парсинг сайта']
+        context['input_paragraph'] = ['Название сайта', 'URL сайта']
+        context['button'] = 'Отправить'
+        return context
     
-    context = {
-        'title': 'Главная страница',
-        'header': ['Добро пожаловать на YouParse', 'Создайте новый запрос на парсинг сайта'],
-        'input_paragraph': ['Название сайта', 'URL сайта'],
-        'button': 'Отправить',
-        'form': form,
-    }
-    return render(request, 'parse/main_page.html', context)
+    def form_valid(self, form):
+        form.save(commit=False)
+        form.save()
+        site_id = form.instance.id
+        return redirect('req_site_detail', pk=site_id)
+
+
+# def index(request):
+#     if request.method == 'POST':
+#         form = ReqSiteForm(request.POST)
+#         if form.is_valid():
+#             form.save(commit=False)
+#             form.save()
+#             site_id = form.instance.id
+#             return redirect('req_site_detail', pk=site_id)
+#     else:
+#         form = ReqSiteForm()
+    
+#     context = {
+#         'title': 'Главная страница',
+#         'header': ['Добро пожаловать на YouParse', 'Создайте новый запрос на парсинг сайта'],
+#         'input_paragraph': ['Название сайта', 'URL сайта'],
+#         'button': 'Отправить',
+#         'form': form,
+#     }
+#     return render(request, 'parse/main_page.html', context)
 
 class ReqSiteListView(ListView):
 
