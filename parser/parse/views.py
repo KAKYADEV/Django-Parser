@@ -1,9 +1,13 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView, FormView
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, ListView, DetailView, FormView
 from .models import ReqSite, ParsedData
 from .forms import ReqSiteForm
 from .tasks import start_background_parse
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.views import LoginView
+from django.contrib.auth import logout
 
 
 class MainPageView(FormView):
@@ -19,31 +23,12 @@ class MainPageView(FormView):
         return context
     
     def form_valid(self, form):
+        user = self.request.user
+        form.instance.user = user
         form.save(commit=False)
         form.save()
         site_id = form.instance.id
         return redirect('req_site_detail', pk=site_id)
-
-
-# def index(request):
-#     if request.method == 'POST':
-#         form = ReqSiteForm(request.POST)
-#         if form.is_valid():
-#             form.save(commit=False)
-#             form.save()
-#             site_id = form.instance.id
-#             return redirect('req_site_detail', pk=site_id)
-#     else:
-#         form = ReqSiteForm()
-    
-#     context = {
-#         'title': 'Главная страница',
-#         'header': ['Добро пожаловать на YouParse', 'Создайте новый запрос на парсинг сайта'],
-#         'input_paragraph': ['Название сайта', 'URL сайта'],
-#         'button': 'Отправить',
-#         'form': form,
-#     }
-#     return render(request, 'parse/main_page.html', context)
 
 class ReqSiteListView(ListView):
 
@@ -97,3 +82,30 @@ class ParsedDataDetailView(DetailView):
         context['site_description'] = self.object.description
         context['site_keywords'] = self.object.keywords
         return context
+
+class RegisterUserView(CreateView):
+    template_name = 'parse/register.html'
+    form_class = UserCreationForm
+    success_url = reverse_lazy('login')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Регистрация пользователя'
+        context['header'] = 'Регистрация нового пользователя'
+        context['button'] = 'Зарегистрироваться'
+        return context
+
+class LoginUserView(LoginView):
+    template_name = 'parse/login.html'
+    authentication_form = AuthenticationForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Вход пользователя'
+        context['header'] = 'Вход в систему'
+        context['button'] = 'Войти'
+        return context
+
+def logout_user(request):
+    logout(request)
+    return redirect('index')
