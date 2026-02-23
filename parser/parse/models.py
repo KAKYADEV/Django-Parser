@@ -1,7 +1,10 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.contrib.auth.models import User
 
 class ReqSite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='req_site')
+
 
     class Site(models.TextChoices):
         NEW = 'new', 'Новый'
@@ -33,7 +36,7 @@ class ReqSite(models.Model):
         return super().save(*args, **kwargs)
     
 class ParsedData(models.Model):
-    site = models.ForeignKey(ReqSite, on_delete=models.CASCADE, related_name='parsed_data')
+    site = models.OneToOneField(ReqSite, on_delete=models.CASCADE, related_name='parsed_data')
     title = models.CharField(max_length=255)
     description = models.TextField()
     keywords = models.TextField()
