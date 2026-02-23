@@ -12,5 +12,10 @@
             {{ form.as_p }}
             <button type="submit">{{ button }}</button>
         </form>
+        {% if user.is_authenticated %}
+            <p>{{ user.username }} | <a href="{% url 'logout' %}">Выйти</a></p>
+        {% else %}
+            <p><a href="{% url 'register' %}">Регистрация</a> | <a href="{% url 'login' %}">Вход</a></p>
+        {% endif %}
     </body>
 </html>
