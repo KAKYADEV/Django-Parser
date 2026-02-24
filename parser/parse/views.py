@@ -36,6 +36,9 @@ class ReqSiteListView(ListView):
     template_name = 'parse/req_sites_list.html'
     context_object_name = 'sites'
 
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Список запросов'
@@ -44,7 +47,8 @@ class ReqSiteListView(ListView):
         return context
 
 def req_site_detail(request, pk):
-    site = ReqSite.objects.get(pk=pk)
+    sites = ReqSite.objects.filter(user=request.user)
+    site = sites.get(pk=pk)
     context = {
         'title': f'Парсинг {site.name}',
         'header': f'Запрос на парсинг сайта "{site.name}", URL: {site.url}',
@@ -53,7 +57,8 @@ def req_site_detail(request, pk):
     return render(request, 'parse/req_site_detail.html', context)
 
 def start_parse(request, pk):
-    site = ReqSite.objects.get(pk=pk)
+    sites = ReqSite.objects.filter(user=request.user)
+    site = sites.get(pk=pk)
     
     if request.method == 'POST':
         start_background_parse.delay(pk)
@@ -70,6 +75,9 @@ class ParsedDataDetailView(DetailView):
     model = ParsedData
     template_name = 'parse/parsed_data_detail.html'
     context_object_name = 'parsed_data'
+
+    def get_queryset(self):
+        return super().get_queryset().filter(site__user=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
