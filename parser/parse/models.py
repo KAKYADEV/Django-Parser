@@ -25,7 +25,6 @@ class ReqSite(models.Model):
     )
 
     time_request = models.DateTimeField(auto_now_add=True)
-    duration = models.DurationField(null=True, blank=True)
 
     def __str__(self):
         return f"Сайт - {self.name}, URL - {self.url}"
@@ -49,5 +48,5 @@ class ParsedData(models.Model):
     @property
     def duration_time(self):
         if self.site.time_request and self.time_response:
-            return str(self.time_response - self.site.time_request)
+            return str(self.time_response - self.site.time_request).split('.')[0]  # Убираем микросекунды
         return None
