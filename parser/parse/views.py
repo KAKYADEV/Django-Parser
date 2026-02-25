@@ -8,6 +8,7 @@ from .tasks import start_background_parse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout
+from django.shortcuts import get_object_or_404
 
 
 class MainPageView(FormView):
@@ -48,7 +49,7 @@ class ReqSiteListView(ListView):
 
 def req_site_detail(request, pk):
     sites = ReqSite.objects.filter(user=request.user)
-    site = sites.get(pk=pk)
+    site = get_object_or_404(sites, pk=pk)
     context = {
         'title': f'Парсинг {site.name}',
         'header': f'Запрос на парсинг сайта "{site.name}", URL: {site.url}',
@@ -58,7 +59,7 @@ def req_site_detail(request, pk):
 
 def start_parse(request, pk):
     sites = ReqSite.objects.filter(user=request.user)
-    site = sites.get(pk=pk)
+    site = get_object_or_404(sites, pk=pk)
     
     if request.method == 'POST':
         start_background_parse.delay(pk)
