@@ -15,6 +15,21 @@
             <li><strong>Заголовок страницы:</strong> {{ site_title }}</li>
             <li><strong>Описание страницы:</strong> {{ site_description }}</li>
             <li><strong>Ключевые слова:</strong> {{ site_keywords }}</li>
+            <li><strong>Заголовки:</strong>
+                <ul>
+                    {% for header in site_headers %}
+                        <li>{{ header }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <li><strong>Изображения:</strong>
+                <ul>
+                    {% for image in site_images %}
+                        <li>{{ image }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+                <li><strong>SEO Score:</strong> {{ seo_score }}</li>
         </list>
         <a href="{% url 'req_site_list' %}">К списку запросов</a>
     </body>
