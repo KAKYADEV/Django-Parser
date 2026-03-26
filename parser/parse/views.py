@@ -90,6 +90,9 @@ class ParsedDataDetailView(DetailView):
         context['site_title'] = self.object.title
         context['site_description'] = self.object.description
         context['site_keywords'] = self.object.keywords
+        context['site_headers'] = self.object.headers
+        context['site_images'] = self.object.images
+        context['seo_score'] = self.object.seo_score
         return context
 
 class RegisterUserView(CreateView):
