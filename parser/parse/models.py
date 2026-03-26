@@ -40,6 +40,9 @@ class ParsedData(models.Model):
     description = models.TextField()
     keywords = models.TextField()
     time_response = models.DateTimeField(auto_now_add=True)
+    headers = models.JSONField(default=list)
+    images = models.JSONField(default=list)
+    seo_score = models.IntegerField(default=0)
 
 
     def __str__(self):
