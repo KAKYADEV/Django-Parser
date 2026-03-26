@@ -33,6 +33,8 @@ class Parser:
             title = get_title(soup)
             description = get_description(soup)
             keywords = get_keywords(soup)
+            headers = get_header(soup)
+            images = get_images(soup)
 
         except ParserError as e:
             parser_logger.exception("ParserError", exc_info=True)
@@ -43,6 +45,8 @@ class Parser:
                 'title': title,
                 'description': description,
                 'keywords': keywords,
+                'headers': headers,
+                'images': images,
             }
         finally:
             driver.quit()
