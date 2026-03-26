@@ -43,6 +43,8 @@ def start_background_parse(pk):
             title = result['title'],
             description = result['description'],
             keywords = result['keywords'],
+            headers = result['headers'],
+            images = result['images'],
         )
 
         site.status = ReqSite.Site.DONE
