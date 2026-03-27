@@ -3,6 +3,7 @@ from parse.services.parser import Parser
 from parse.models import *
 from .services.exceptions import *
 import logging
+from parse.services.seo_analisys import seo_counter
 
 
 tasks_logger = logging.getLogger(__name__)
@@ -28,6 +29,7 @@ def start_background_parse(pk):
     try:
         parser = Parser(site.url)
         result = parser.run()
+        seo_points = seo_counter(result)
     except ParserError as e:
         site.status = ReqSite.Site.ERROR
         site.save(update_fields=['status'])
@@ -45,6 +47,7 @@ def start_background_parse(pk):
             keywords = result['keywords'],
             headers = result['headers'],
             images = result['images'],
+            seo_score = seo_points,
         )
 
         site.status = ReqSite.Site.DONE
