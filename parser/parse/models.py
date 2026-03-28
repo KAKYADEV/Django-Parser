@@ -42,7 +42,8 @@ class ParsedData(models.Model):
     time_response = models.DateTimeField(auto_now_add=True)
     headers = models.JSONField(default=list)
     images = models.JSONField(default=list)
-    seo_score = models.IntegerField(default=0)
+    images_preview = models.JSONField(default=list)
+    seo_score = models.JSONField(default=dict)
 
 
     def __str__(self):
