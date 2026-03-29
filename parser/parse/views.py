@@ -42,17 +42,17 @@ class ReqSiteListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Список запросов'
-        context['header'] = 'Список запросов'
-        context['empty_message'] = 'Список запросов пуст'
+        context['title'] = 'Request Sites List'
+        context['header'] = 'Request Sites List'
+        context['empty_message'] = 'Request Sites List is empty'
         return context
 
 def req_site_detail(request, pk):
     sites = ReqSite.objects.filter(user=request.user)
     site = get_object_or_404(sites, pk=pk)
     context = {
-        'title': f'Парсинг {site.name}',
-        'header': f'Запрос на парсинг сайта "{site.name}", URL: {site.url}',
+        'title': f'Parsing {site.name}',
+        'header': f'Request for parsing website "{site.name}", URL: {site.url}',
         'site': site,
     }
     return render(request, 'parse/req_site_detail.html', context)
@@ -65,8 +65,8 @@ def start_parse(request, pk):
         start_background_parse.delay(pk)
 
     context = {
-        'title': f'Парсинг {site.name} в работе...',
-        'header': f'Парсинг {site.name} в работе...',
+        'title': f'Parsing {site.name} is running...',
+        'header': f'Parsing {site.name} is running...',
         'site': site,
     }
 
@@ -82,8 +82,8 @@ class ParsedDataDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = f'Результаты парсинга'
-        context['header'] = f'Результаты парсинга для сайта "{self.object.site.name}"'
+        context['title'] = f'Parsed Data for {self.object.site.name}'
+        context['header'] = f'Parsed Data for Website "{self.object.site.name}"'
         context['time_start'] = self.object.site.time_request
         context['time_end'] = self.object.time_response
         context['duration_time'] = self.object.duration_time
@@ -102,9 +102,9 @@ class RegisterUserView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Регистрация пользователя'
-        context['header'] = 'Регистрация нового пользователя'
-        context['button'] = 'Зарегистрироваться'
+        context['title'] = 'Register New User'
+        context['header'] = 'Registration of New User'
+        context['button'] = 'Register'
         return context
 
 class LoginUserView(LoginView):
@@ -113,9 +113,9 @@ class LoginUserView(LoginView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Вход пользователя'
-        context['header'] = 'Вход в систему'
-        context['button'] = 'Войти'
+        context['title'] = 'Log in'
+        context['header'] = 'Log in to System'
+        context['button'] = 'Log in'
         return context
 
 def logout_user(request):

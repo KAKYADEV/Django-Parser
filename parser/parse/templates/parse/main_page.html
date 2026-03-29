@@ -13,9 +13,9 @@
             <button type="submit">{{ button }}</button>
         </form>
         {% if user.is_authenticated %}
-            <p>{{ user.username }} | <a href="{% url 'logout' %}">Выйти</a></p>
+            <p>{{ user.username }} | <a href="{% url 'logout' %}">Log out</a></p>
         {% else %}
-            <p><a href="{% url 'register' %}">Регистрация</a> | <a href="{% url 'login' %}">Вход</a></p>
+            <p><a href="{% url 'register' %}">Register</a> | <a href="{% url 'login' %}">Log in</a></p>
         {% endif %}
     </body>
 </html>

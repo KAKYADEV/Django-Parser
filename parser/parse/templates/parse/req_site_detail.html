@@ -6,12 +6,12 @@
     </head>
     <body>
         <h1>{{ header }}</h1>
-        <p>Название сайта: {{ site.name }}</p>
-        <p>URL сайта: {{ site.url }}</p>
+        <p>Site name: {{ site.name }}</p>
+        <p>URL: {{ site.url }}</p>
         <form method="post" action="{% url 'start_parse' site.id %}">
             {% csrf_token %}
-            <button type="submit">Запустить парсинг</button>
+            <button type="submit">Start parsing</button>
         </form>
-        <a href="{% url 'req_site_list' %}">К списку запросов</a>
+        <a href="{% url 'req_site_list' %}">Request list</a>
     </body>
 </html>
