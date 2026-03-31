@@ -1,21 +1,16 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{{ title }}</title>
-    </head>
-    <body>
-        <h1>{{ header.0 }}</h1>
-        <h2>{{ header.1 }}</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">{{ button }}</button>
-        </form>
-        {% if user.is_authenticated %}
-            <p>{{ user.username }} | <a href="{% url 'logout' %}">Log out</a></p>
-        {% else %}
-            <p><a href="{% url 'register' %}">Register</a> | <a href="{% url 'login' %}">Log in</a></p>
-        {% endif %}
-    </body>
-</html>
+{% extends 'parse/base.html' %}
+
+{% block content %}
+    <h1>{{ header.0 }}</h1>
+    <h2>{{ header.1 }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">{{ button }}</button>
+    </form>
+    {% if user.is_authenticated %}
+        <p>{{ user.username }} | <a href="{% url 'logout' %}">Log out</a></p>
+    {% else %}
+        <p><a href="{% url 'register' %}">Register</a> | <a href="{% url 'login' %}">Log in</a></p>
+    {% endif %}
+{% endblock %}

@@ -1,20 +1,15 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{{ title }}</title>
-    </head>
-    <body>
-        <h2>{{ header }}</h2>
+{% extends 'parse/base.html' %}
 
-        {% if site.status == 'processing' or site.status == 'new' %}
-            <meta http-equiv="refresh" content="5">
-        {% endif %}
+{% block content %}
+    <h2>{{ header }}</h2>
 
-        {% if site.status == 'done' %}
-            <script>
-                window.location.href = "{% url 'parsed_data_detail' site.parsed_data.id %}"
-            </script>
-        {% endif %}
-    </body>
-</html>
+    {% if site.status == 'processing' or site.status == 'new' %}
+        <meta http-equiv="refresh" content="5">
+    {% endif %}
+
+    {% if site.status == 'done' %}
+        <script>
+            window.location.href = "{% url 'parsed_data_detail' site.parsed_data.id %}"
+        </script>
+    {% endif %}
+{% endblock %}

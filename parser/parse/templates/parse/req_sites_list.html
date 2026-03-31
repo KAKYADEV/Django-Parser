@@ -1,18 +1,13 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{{ title }}</title>
-    </head>
-    <body>
-        <h1>{{ header }}</h1>
-        <ol>
-            {% for site in sites %}
-                <li>{{ site }}</li>
-            {% empty %}
-                <p>{{ empty_message }}</p>
-            {% endfor %}
-        </ol>
-        <a href="{% url 'index' %}">Main page</a>
-    </body>
-</html>
+{% extends 'parse/base.html' %}
+
+{% block content %}
+    <h1>{{ header }}</h1>
+    <ol>
+        {% for site in sites %}
+            <li>{{ site }}</li>
+        {% empty %}
+            <p>{{ empty_message }}</p>
+        {% endfor %}
+    </ol>
+    <a href="{% url 'index' %}">Main page</a>
+{% endblock %}
