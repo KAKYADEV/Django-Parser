@@ -17,10 +17,10 @@ class MainPageView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Главная страница'
-        context['header'] = ['Добро пожаловать на YouParse', 'Создайте новый запрос на парсинг сайта']
-        context['input_paragraph'] = ['Название сайта', 'URL сайта']
-        context['button'] = 'Отправить'
+        context['title'] = 'YouParse'
+        context['header'] = ['Welcome to YouParse - your website SEO analyzer', 'Create a new request for website parsing']
+        context['input_paragraph'] = ['Website Name', 'Website URL']
+        context['button'] = 'Submit'
         return context
     
     def form_valid(self, form):
@@ -42,9 +42,9 @@ class ReqSiteListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Request Sites List'
-        context['header'] = 'Request Sites List'
-        context['empty_message'] = 'Request Sites List is empty'
+        context['title'] = 'Your requests'
+        context['header'] = 'Requested sites list'
+        context['empty_message'] = 'Requested sites list is empty'
         return context
 
 def req_site_detail(request, pk):
@@ -82,8 +82,8 @@ class ParsedDataDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = f'Parsed Data for {self.object.site.name}'
-        context['header'] = f'Parsed Data for Website "{self.object.site.name}"'
+        context['title'] = f'Analyzed Data'
+        context['header'] = f'Analyzed Data for Website "{self.object.site.name}"'
         context['time_start'] = self.object.site.time_request
         context['time_end'] = self.object.time_response
         context['duration_time'] = self.object.duration_time
