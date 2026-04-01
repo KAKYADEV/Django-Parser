@@ -8,7 +8,16 @@
         <link type="text/css" href="{% static 'parse/stile1.css' %}" rel="stylesheet" />
     </head>
     <body>
-        {% block content %} 
-        {% endblock %}
+        <header>
+            <h1>YouParse</h1>
+            <nav>
+                <a href="{% url 'index' %}">Home</a>
+                <a href="{% url 'about' %}">About</a>
+            </nav>
+        </header>
+        <div class="container">
+            {% block content %} 
+            {% endblock %}
+        </div>
     </body>
 </html>
