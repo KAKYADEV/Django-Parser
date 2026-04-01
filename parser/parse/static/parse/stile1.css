@@ -1,3 +1,31 @@
-h1 {
-    color: rgba(10, 218, 162, 0.323);
+@layer reset {
+    * {
+        box-sizing: border-box;
+        margin: 0;
+    }
+
+    input, button, textarea, select {
+        font: inherit;
+    }
+
+    html {
+        color-scheme: light dark;
+    }
+}
+
+@layer layout {
+  .container {
+    max-inline-size: 100%;
+    margin-inline: auto;
+    padding-inline: 1rem;
+    border: 1px solid red;
+  }
+}
+
+@layer components {
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
