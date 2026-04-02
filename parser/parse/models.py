@@ -27,7 +27,7 @@ class ReqSite(models.Model):
     time_request = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Сайт - {self.name}, URL - {self.url}"
+        return f"Website - {self.name}, URL - {self.url}"
     
     def save(self, *args, **kwargs):
         if not self.slug:
