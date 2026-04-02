@@ -1,3 +1,5 @@
+@layer reset, layout, components;
+
 @layer reset {
     * {
         box-sizing: border-box;
@@ -85,8 +87,19 @@
   }
 
   .navigation {
+    color: white;
+    text-decoration: underline;
+    font-size: 18px;
     display: flex;
     margin-inline-start: 3rem;
     font-size: 1.5rem;
   }
+
+  li {
+      margin: 0.5rem;
+  }  
+
+  p {
+      margin: 0.5rem;
+  }  
 }
