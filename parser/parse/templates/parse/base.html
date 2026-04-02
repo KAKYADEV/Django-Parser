@@ -11,8 +11,16 @@
         <header>
             <h1>YouParse</h1>
             <nav>
-                <a href="{% url 'index' %}">Home</a>
-                <a href="{% url 'about' %}">About</a>
+                <a class="navigation" href="{% url 'index' %}">Home</a>
+                <a class="navigation" href="{% url 'about' %}">About</a>
+                <div class="login-section">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'req_site_list' %}">{{ user.username }}</a>| <a href="{% url 'logout' %}">Log out</a>
+                    {% else %}
+                        <a href="{% url 'register' %}">Register</a> | <a href="{% url 'login' %}">Log in</a>
+                    {% endif %}
+                </div>
+                
             </nav>
         </header>
         <div class="container">
