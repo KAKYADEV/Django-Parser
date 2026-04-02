@@ -43,8 +43,8 @@ class ReqSiteListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Your requests'
-        context['header'] = 'Requested sites list'
-        context['empty_message'] = 'Requested sites list is empty'
+        context['header'] = 'Requested sites list:'
+        context['empty_message'] = 'Requested sites list is empty. Please create a new request for website parsing.'
         return context
 
 def req_site_detail(request, pk):
