@@ -121,3 +121,11 @@ class LoginUserView(LoginView):
 def logout_user(request):
     logout(request)
     return redirect('index')
+
+def about(request):
+    context = {
+        'title': 'About',
+        'header': ['What is YouParse?', 'How it works?', 'What is analyzed?', 'What is SEO score?'],
+    }
+
+    return render(request, 'parse/about.html', context)
