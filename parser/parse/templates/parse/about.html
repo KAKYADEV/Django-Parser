@@ -1,0 +1,27 @@
+{% extends 'parse/base.html' %}
+
+{% block content %}
+    <h2>{{ header.0 }}</h2>
+    <p>YouParse is a simple tool that analyzes web pages and helps you understand their SEO condition.</p>
+    <p>It allows you to quickly check how well a page is structured and identify potential issues that may affect visibility in search engines.</p>
+    <h2>{{ header.1 }}</h2>
+    <p>Using YouParse is straightforward:</p>
+    <ol>
+        <li>Enter the URL of the page you want to analyze.</li>
+        <li>The system processes the page and extracts key data.</li>
+        <li>You receive a structured report with the results.</li>
+    </ol>
+    <p>The goal is to give you useful insights without overwhelming you with technical details.</p>
+    <h2>{{ header.2 }}</h2>
+    <p>YouParse focuses on the most important elements of a web page:</p>
+    <ul>
+        <li>Meta tags (title, description)</li>
+        <li>Headings (H1, H2, etc.)</li>
+        <li>Images and their attributes</li>
+        <li>Internal and external links</li>
+    </ul>
+    <h2>{{ header.3 }}</h2>
+    <p>SEO score is a simplified metric that represents the overall quality of a page from an SEO perspective.</p>
+    <p>It is based on the presence and structure of key elements such as metadata, headings, and content organization.</p>
+    <p>The score is not absolute, but it gives you a quick way to evaluate and compare pages.</p>
+{% endblock %}
