@@ -25,6 +25,7 @@ class Parser:
 
             options = webdriver.ChromeOptions()
             options.add_experimental_option('excludeSwitches', ['enable-logging'])
+            options.add_argument("--headless=new")
             driver = webdriver.Chrome(options=options)
             driver.get(self.site_url)
             html_source = driver.page_source
