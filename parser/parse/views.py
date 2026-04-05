@@ -9,6 +9,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 
 class MainPageView(FormView):
@@ -24,14 +26,17 @@ class MainPageView(FormView):
         return context
     
     def form_valid(self, form):
-        user = self.request.user
-        form.instance.user = user
-        form.save(commit=False)
-        form.save()
-        site_id = form.instance.id
-        return redirect('req_site_detail', pk=site_id)
+        if self.request.user.is_anonymous:
+            return redirect('login')
+        else:
+            user = self.request.user
+            form.instance.user = user
+            form.save(commit=False)
+            form.save()
+            site_id = form.instance.id
+            return redirect('req_site_detail', pk=site_id)
 
-class ReqSiteListView(ListView):
+class ReqSiteListView(LoginRequiredMixin, ListView):
 
     model = ReqSite
     template_name = 'parse/req_sites_list.html'
@@ -47,6 +52,7 @@ class ReqSiteListView(ListView):
         context['empty_message'] = 'Requested sites list is empty. Please create a new request for website parsing.'
         return context
 
+@login_required
 def req_site_detail(request, pk):
     sites = ReqSite.objects.filter(user=request.user)
     site = get_object_or_404(sites, pk=pk)
@@ -57,6 +63,7 @@ def req_site_detail(request, pk):
     }
     return render(request, 'parse/req_site_detail.html', context)
 
+@login_required
 def start_parse(request, pk):
     sites = ReqSite.objects.filter(user=request.user)
     site = get_object_or_404(sites, pk=pk)
@@ -72,7 +79,7 @@ def start_parse(request, pk):
 
     return render(request, 'parse/parse_processing.html', context)
 
-class ParsedDataDetailView(DetailView):
+class ParsedDataDetailView(LoginRequiredMixin, DetailView):
     model = ParsedData
     template_name = 'parse/parsed_data_detail.html'
     context_object_name = 'parsed_data'
