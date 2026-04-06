@@ -14,28 +14,8 @@
         <li><strong>Headers (Headers SEO score: {{ seo_score.header_score }}):</strong>
             <ul>
                 <p><strong>H1:</strong></p>
-                {% for header in site_headers.h1 %}
-                    <li>{{ header }}</li>
-                {% endfor %}
-                <p><strong>H2:</strong></p>
-                {% for header in site_headers.h2 %}
-                    <li>{{ header }}</li>
-                {% endfor %}
-                <p><strong>H3:</strong></p>
-                {% for header in site_headers.h3 %}
-                    <li>{{ header }}</li>
-                {% endfor %}
-                <p><strong>H4:</strong></p>
-                {% for header in site_headers.h4 %}
-                    <li>{{ header }}</li>
-                {% endfor %}
-                <p><strong>H5:</strong></p>
-                {% for header in site_headers.h5 %}
-                    <li>{{ header }}</li>
-                {% endfor %}
-                <p><strong>H6:</strong></p>
-                {% for header in site_headers.h6 %}
-                    <li>{{ header }}</li>
+                {% for header in site_headers %}
+                    <li><strong>h{{ header.level }}:</strong> {{ header.text }}</li>
                 {% endfor %}
             </ul>
         </li>
