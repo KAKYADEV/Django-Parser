@@ -4,9 +4,13 @@
     <h1>{{ header }}</h1>
     <ol>
         {% for site in sites %}
-            <li>{{ site }} <a href="{% url 'parsed_data_detail' site.parsed_data.id %}">Check result</a></li> 
-        {% empty %}
-            <p>{{ empty_message }}</p>
-        {% endfor %}
-    </ol>
+            {% if site.parsed_data %}
+                <li>{{ site }} <a href="{% url 'parsed_data_detail' site.parsed_data.id %}">Check result</a></li> 
+            {% else %}
+                <li>{{ site }} | No results</li>
+            {% endif %}
+            {% empty %}
+                <p>{{ empty_message }}</p>
+            {% endfor %}
+        </ol>
 {% endblock %}
