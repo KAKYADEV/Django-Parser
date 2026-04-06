@@ -55,83 +55,25 @@ def get_keywords(soup):
     else:
         return keywords
     
-# Add oportunity to get headers, ... (need to change model ParsedData, add a multidata field, make migrations)
 
 def get_header(soup):
     try:
-        header_dict = {
-            'h1': [],
-            'h2': [],
-            'h3': [],
-            'h4': [],
-            'h5': [],
-            'h6': []
-        }
-        scrap_logger.info(f"Запущен поиск тэга h1")
-        headers = soup.find_all('h1')
+        header_list = []
+        scrap_logger.info(f"Запущен поиск тэгов h1-h6")
+        headers = soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
         if headers:
             for header in headers:
-                header = header.text
-                header_dict['h1'].append(header)
+                level = int(header.name[1])
+                text = header.text.strip()
+                header_list.append({'level': level, 'text': text})
         else:
-            header = 'No headers found'
-            header_dict['h1'].append(header)
-
-        scrap_logger.info(f"Запущен поиск тэга h2")
-        headers = soup.find_all('h2')
-        if headers:
-            for header in headers:
-                header = header.text
-                header_dict['h2'].append(header)
-        else:
-            header = 'No headers found'
-            header_dict['h2'].append(header)
-
-        scrap_logger.info(f"Запущен поиск тэга h3")
-        headers = soup.find_all('h3')
-        if headers:
-            for header in headers:
-                header = header.text
-                header_dict['h3'].append(header)
-        else:
-            header = 'No headers found'
-            header_dict['h3'].append(header)
-
-        scrap_logger.info(f"Запущен поиск тэга h4")
-        headers = soup.find_all('h4')
-        if headers:
-            for header in headers:
-                header = header.text
-                header_dict['h4'].append(header)
-        else:
-            header = 'No headers found'
-            header_dict['h4'].append(header)
-
-        scrap_logger.info(f"Запущен поиск тэга h5")
-        headers = soup.find_all('h5')
-        if headers:
-            for header in headers:
-                header = header.text
-                header_dict['h5'].append(header)
-        else:
-            header = 'No headers found'
-            header_dict['h5'].append(header)
-
-        scrap_logger.info(f"Запущен поиск тэга h6")
-        headers = soup.find_all('h6')
-        if headers:
-            for header in headers:
-                header = header.text
-                header_dict['h6'].append(header)
-        else:
-            header = 'No headers found'
-            header_dict['h6'].append(header)
+            header_list.append('No headers found')
     except Exception as e:
         scrap_logger.exception(f"{e}", exc_info=True)
         raise TagNameNotExist from e
     else:
-        return header_dict
-    
+        return header_list
+
 def get_images(soup):
     try:
         image_list = []
