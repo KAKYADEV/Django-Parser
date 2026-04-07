@@ -13,7 +13,6 @@
         <li><strong>Keywords:</strong> {{ site_keywords }}, <strong>Keywords SEO score:</strong> {{ seo_score.keywords_score }} </li>
         <li><strong>Headers (Headers SEO score: {{ seo_score.header_score }}):</strong>
             <ul>
-                <p><strong>H1:</strong></p>
                 {% for header in site_headers %}
                     <li><strong>h{{ header.level }}:</strong> {{ header.text }}</li>
                 {% endfor %}
