@@ -83,7 +83,6 @@ def imgs_score_counter(result):
                 good_count += 1
         if bad_count == 0:
             imgs_score = 1
-            seo_score += 1
         elif bad_count == len(result['images']):
             imgs_score = 0
         else:
@@ -109,25 +108,43 @@ def seo_counter(result):
 
     return score
 
-# Настроить отображение good/bad для картинок в зависимости от наличия alt-текста
 def img_storage(result, score):
     imgs = []
-    if score == 1:
-        for img in result['images']:
-            if len(imgs) < 2:
-                img['status'] = "good"
-                imgs.append(img)
-            else:
-                break
+    if result['images'] == ["No images found"]:
+        imgs.append("No images found")
     else:
-        for img in result['images']:
-            if (img['alt'] == "No alt text found" or img['alt'] == "") and img['alt'] not in imgs:
-                img['status'] = "bad"
-                imgs.append(img)
-            elif img['alt'] != "No alt text found" and img['alt'] != "" and (len(imgs) == 0 or imgs[0]['alt'] == "No alt text found"):
-                img['status'] = "good"
-                imgs.append(img)
-            if len(imgs) == 2:
-                break
+        if score == 1:
+            for img in result['images']:
+                if len(imgs) < 2:
+                    img['status'] = "good"
+                    imgs.append(img)
+                else:
+                    break
+        elif score == 0.5:
+            bad_count = 0
+            for img in result['images']:
+                if (img['alt'] == "No alt text found" or img['alt'] == "") and bad_count == 0:
+                    img['status'] = "bad"
+                    imgs.append(img)
+                    bad_count += 1
+                elif img['alt'] != "No alt text found" and img['alt'] != "":
+                    if not imgs:
+                        img['status'] = "good"
+                        imgs.append(img)
+                    else:
+                        if imgs[0]['status'] == "good":
+                            continue
+                        else:
+                            img['status'] = "good"
+                            imgs.append(img)
+                if len(imgs) == 2:
+                    break
+        else:
+            for img in result['images']:
+                if len(imgs) < 2:
+                    img['status'] = "bad"
+                    imgs.append(img)
+                else:
+                    break
             
     return imgs
