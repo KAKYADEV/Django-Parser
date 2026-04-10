@@ -17,14 +17,26 @@
 
 @layer layout {
   .container {
-    max-inline-size: 100%;
+    max-inline-size: 1000px;
     margin-inline: auto;
     margin-bottom: 1rem;
     padding-inline: 1rem;
+    border: 1px solid red;
+  }
+
+  .login-container {
+    display: grid;
+    place-content: center;
+    border: 1px solid red;
   }
 
   body {
+    display: grid;
+    grid-template-rows: auto 1fr; 
+    min-height: 100vh;
+    margin: 0;
     background-color: black;
+    border: 1px solid green;
   }
 }
 
@@ -35,6 +47,7 @@
     justify-content: space-between;
     align-items: center;
     padding-inline: 1rem;
+    border: 1px solid blue;
   }
 
   nav {
