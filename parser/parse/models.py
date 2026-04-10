@@ -11,6 +11,7 @@ class ReqSite(models.Model):
         PROCESSING = 'processing', 'В процессе'
         DONE = 'done', 'Завершен'
         ERROR = 'error', 'Ошибка'
+        CAPTCHA = 'captcha', 'Капча'
         
 
 
