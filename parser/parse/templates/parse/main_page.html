@@ -1,6 +1,7 @@
 {% extends 'parse/base.html' %}
 
 {% block content %}
+<div class="container">
     <h1>{{ header.0 }}</h1>
     <h2>{{ header.1 }}</h2>
     <form method="post">
@@ -8,4 +9,5 @@
         {{ form.as_p }}
         <button type="submit">{{ button }}</button>
     </form>
+</div>
 {% endblock %}

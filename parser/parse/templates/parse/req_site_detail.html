@@ -1,6 +1,7 @@
 {% extends 'parse/base.html' %}
 
 {% block content %}
+<div class="container">
     <h1>{{ header }}</h1>
     <p>Site name: {{ site.name }}</p>
     <p>URL: {{ site.url }}</p>
@@ -9,4 +10,5 @@
         <button type="submit">Start parsing</button>
     </form>
     <a href="{% url 'req_site_list' %}">Request list</a>
+</div>
 {% endblock %}

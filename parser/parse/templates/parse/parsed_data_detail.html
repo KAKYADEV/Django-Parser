@@ -1,6 +1,7 @@
 {% extends 'parse/base.html' %}
 
 {% block content %}
+<div class="container">
     <h1>{{ header }}</h1>
     <list>
         <li><strong>Site name:</strong> {{ parsed_data.site.name }}</li>
@@ -28,4 +29,5 @@
             <li><strong>SEO Score:</strong> {{ seo_score.seo_score }}/5</li>
     </list>
     <a href="{% url 'req_site_list' %}">Request list</a>
+</div>
 {% endblock %}
