@@ -2,6 +2,7 @@ from celery import shared_task
 from parse.services.parser import Parser
 from parse.models import *
 from .services.exceptions import *
+from selenium.common.exceptions import TimeoutException
 import logging
 from parse.services.seo_analysis import seo_counter, img_storage
 
@@ -31,6 +32,10 @@ def start_background_parse(pk):
         result = parser.run()
         seo_points = seo_counter(result)
         imgs_prev = img_storage(result, seo_points['imgs_score'])
+    except TimeoutException as e:
+        site.status = ReqSite.Site.CAPTCHA
+        site.save(update_fields=['status'])
+        tasks_logger.exception("TimeoutException", exc_info=True)
     except ParserError as e:
         site.status = ReqSite.Site.ERROR
         site.save(update_fields=['status'])

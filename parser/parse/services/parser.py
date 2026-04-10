@@ -47,13 +47,11 @@ class Parser:
             keywords = get_keywords(soup)
             headers = get_header(soup)
             images = get_images(soup)
-
         except TimeoutException:
             parser_logger.exception("TimeoutException", exc_info=True)
             with open('exc.html', 'a', encoding='utf-8') as f:
                 f.write(driver.page_source)
-            raise ParserError("An unexpected error occurred during parsing")
-
+            raise
         except ParserError:
             parser_logger.exception("ParserError", exc_info=True)
             raise
@@ -67,4 +65,5 @@ class Parser:
                 'images': images,
             }
         finally:
+            driver.close()
             driver.quit()
