@@ -21,13 +21,11 @@
     margin-inline: auto;
     margin-bottom: 1rem;
     padding-inline: 1rem;
-    border: 1px solid red;
   }
 
   .login-container {
     display: grid;
     place-content: center;
-    border: 1px solid red;
   }
 
   body {
@@ -36,7 +34,6 @@
     min-height: 100vh;
     margin: 0;
     background-color: black;
-    border: 1px solid green;
   }
 }
 
@@ -47,7 +44,6 @@
     justify-content: space-between;
     align-items: center;
     padding-inline: 1rem;
-    border: 1px solid blue;
   }
 
   nav {
