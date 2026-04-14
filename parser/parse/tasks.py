@@ -8,16 +8,6 @@ from parse.services.seo_analysis import seo_counter, img_storage
 
 
 tasks_logger = logging.getLogger(__name__)
-tasks_logger.setLevel(logging.INFO)
-
-tasks_handler = logging.FileHandler(f"{__name__}.log", mode='w', encoding='utf-8')
-tasks_formatter = logging.Formatter("%(name)s %(asctime)s %(levelname)s %(message)s")
-
-tasks_handler.setFormatter(tasks_formatter)
-tasks_logger.addHandler(tasks_handler)
-
-logging.basicConfig(encoding='utf-8')
-
 
 @shared_task
 def start_background_parse(pk):

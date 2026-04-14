@@ -12,13 +12,6 @@ from selenium.common.exceptions import TimeoutException
 
 
 parser_logger = logging.getLogger(__name__)
-parser_logger.setLevel(logging.INFO)
-
-parser_handler = logging.FileHandler(f"{__name__}.log", mode='w', encoding='utf-8')
-parser_formatter = logging.Formatter("%(name)s %(asctime)s %(levelname)s %(message)s")
-
-parser_handler.setFormatter(parser_formatter)
-parser_logger.addHandler(parser_handler)
 
 class Parser:
     def __init__(self, site_url):

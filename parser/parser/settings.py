@@ -134,3 +134,41 @@ CELERY_TASK_SERIALIZER = 'json'
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+LOGS_DIR = BASE_DIR / 'logs'
+
+LOGS_DIR.mkdir(parents=True, exist_ok=True)
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
+    "handlers": {
+        "file": {
+            "level": "DEBUG",
+            "class": "parser.custom_logging.CustomHandler",
+            "filename": f"{LOGS_DIR}/parser.log",
+            "formatter": "verbose",
+            "encoding": "utf-8",
+        },
+        "console": {
+            "class": "logging.StreamHandler",
+        }
+    },
+    "root": {
+        "handlers": ["file"],
+        "level": "WARNING",
+    },
+    "loggers": {
+        "parse": {
+            "handlers": ["file"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+    },
+}
