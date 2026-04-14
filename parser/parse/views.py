@@ -11,6 +11,7 @@ from django.contrib.auth import logout
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
 
 class MainPageView(FormView):
@@ -71,10 +72,17 @@ def start_parse(request, pk):
     if request.method == 'POST':
         start_background_parse.delay(pk)
 
+    duration = timezone.now() - site.time_request if site.time_request else None
+    if duration and duration.total_seconds() >= 20:
+        is_slow = True
+    else:
+        is_slow = False
+
     context = {
-        'title': f'Parsing {site.name} is running...',
+        'title': f'Parsing info',
         'header': f'Parsing {site.name} is running...',
         'site': site,
+        'is_slow': is_slow
     }
 
     return render(request, 'parse/parse_processing.html', context)

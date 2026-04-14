@@ -4,8 +4,14 @@
 <div class="container">
 
     {% if site.status == 'processing' or site.status == 'new' %}
-        <h2>{{ header }}</h2>
-        <meta http-equiv="refresh" content="5">
+        {% if is_slow %}
+            <h2>{{ header }}</h2>
+            <p>Still analyzing the website… This may take a bit longer than usual.</p>
+            <meta http-equiv="refresh" content="5">
+        {% else %}
+            <h2>{{ header }}</h2>
+            <meta http-equiv="refresh" content="5">
+        {% endif %}
     {% endif %}
 
     {% if site.status == 'done' %}
