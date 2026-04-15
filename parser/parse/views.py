@@ -35,10 +35,10 @@ class MainPageView(FormView):
             form.save(commit=False)
             form.save()
             site_id = form.instance.id
-            return redirect('req_site_detail', pk=site_id)
+            start_background_parse.delay(site_id)
+            return redirect('start_parse', pk=site_id)
 
 class ReqSiteListView(LoginRequiredMixin, ListView):
-
     model = ReqSite
     template_name = 'parse/req_sites_list.html'
     context_object_name = 'sites'
@@ -54,23 +54,9 @@ class ReqSiteListView(LoginRequiredMixin, ListView):
         return context
 
 @login_required
-def req_site_detail(request, pk):
-    sites = ReqSite.objects.filter(user=request.user)
-    site = get_object_or_404(sites, pk=pk)
-    context = {
-        'title': f'Parsing {site.name}',
-        'header': f'Request for parsing website "{site.name}", URL: {site.url}',
-        'site': site,
-    }
-    return render(request, 'parse/req_site_detail.html', context)
-
-@login_required
 def start_parse(request, pk):
     sites = ReqSite.objects.filter(user=request.user)
     site = get_object_or_404(sites, pk=pk)
-    
-    if request.method == 'POST':
-        start_background_parse.delay(pk)
 
     duration = timezone.now() - site.time_request if site.time_request else None
     if duration and duration.total_seconds() >= 20:
