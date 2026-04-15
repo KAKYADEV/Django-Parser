@@ -5,12 +5,16 @@
 
     {% if site.status == 'processing' or site.status == 'new' %}
         {% if is_slow %}
-            <h2>{{ header }}</h2>
-            <p>Still analyzing the website… This may take a bit longer than usual.</p>
-            <meta http-equiv="refresh" content="5">
+            <div class="loading-container">
+                <h2>{{ header }}</h2>
+                <p>Still analyzing the website… This may take a bit longer than usual.</p>
+                <meta http-equiv="refresh" content="5">
+            </div>
         {% else %}
-            <h2>{{ header }}</h2>
-            <meta http-equiv="refresh" content="5">
+            <div class="loading-container"></div>
+                <h2>{{ header }}</h2>
+                <meta http-equiv="refresh" content="5">
+            </div>
         {% endif %}
     {% endif %}
 

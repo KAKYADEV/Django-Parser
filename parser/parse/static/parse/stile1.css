@@ -28,6 +28,24 @@
     place-content: center;
   }
 
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-inline: auto;
+    margin-bottom: 1rem;
+    padding-inline: 1rem;
+  }
+
+  .error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-inline: auto;
+    margin-bottom: 1rem;
+    padding-inline: 1rem;
+  }
+
   body {
     display: grid;
     grid-template-rows: auto 1fr; 
@@ -110,10 +128,6 @@
   }
 
   li {
-      margin: 0.5rem;
-  }  
-
-  p {
       margin: 0.5rem;
   }  
 }
