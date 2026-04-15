@@ -30,13 +30,17 @@ class MainPageView(FormView):
         if self.request.user.is_anonymous:
             return redirect('login')
         else:
+            obj = form.save(commit=False)
             user = self.request.user
-            form.instance.user = user
-            form.save(commit=False)
-            form.save()
-            site_id = form.instance.id
-            start_background_parse.delay(site_id)
-            return redirect('start_parse', pk=site_id)
+            obj.user = user
+            user_request = ReqSite.objects.filter(user=user, url=obj.url, status__in=[ReqSite.Site.NEW, ReqSite.Site.PROCESSING])
+            if user_request.exists():
+                return redirect('start_parse', pk=user_request.first().id)
+            else:
+                obj.save()
+                site_id = obj.id
+                start_background_parse.delay(site_id)
+                return redirect('start_parse', pk=site_id)
 
 class ReqSiteListView(LoginRequiredMixin, ListView):
     model = ReqSite
