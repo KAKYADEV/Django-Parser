@@ -1,18 +1,35 @@
 {% extends 'parse/base.html' %}
 
 {% block content %}
-<div class="container">
+<div class="table-container">
     <h1>{{ header }}</h1>
-    <ol>
-        {% for site in sites %}
-            {% if site.parsed_data %}
-                <li>{{ site }} <a href="{% url 'parsed_data_detail' site.parsed_data.id %}">Check result</a></li> 
-            {% else %}
-                <li>{{ site }} | No results</li>
-            {% endif %}
+    <table>
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Website</th>
+                <th>URL</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for site in sites %}
+            <tr>
+                <td></td>
+                <td>{{ site.name }}</td>
+                <td><a href="{{site.url}}">{{site.url}}</a></td>
+                <td>
+                    {% if site.parsed_data %}
+                        <a href="{% url 'parsed_data_detail' site.parsed_data.id %}">Check result</a>
+                    {% else %}
+                        No results
+                    {% endif %}
+                </td>
+            </tr>
             {% empty %}
                 <p>{{ empty_message }}</p>
             {% endfor %}
-        </ol>
+        </tbody>
+    </table>
 </div>
 {% endblock %}

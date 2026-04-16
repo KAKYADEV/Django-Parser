@@ -37,6 +37,13 @@
     padding-inline: 1rem;
   }
 
+  .table-container {
+    inline-size: 1000px;
+    margin-inline: auto;
+    margin-bottom: 1rem;
+    padding-inline: 1rem;
+  }
+
   .error {
     display: flex;
     flex-direction: column;
@@ -73,7 +80,6 @@
   a {
     color: white;
     text-decoration: underline;
-    font-size: 18px;
     margin-inline: 0.5rem;
   }
 
@@ -116,18 +122,47 @@
   .login-section {
     display: flex;
     margin-left: auto;
+    font-size: 1.5em;
   }
 
   .navigation {
     color: white;
     text-decoration: underline;
-    font-size: 18px;
     display: flex;
     margin-inline-start: 3rem;
-    font-size: 1.5rem;
+    font-size: 1.5em;
   }
 
   li {
       margin: 0.5rem;
-  }  
+  }
+
+  table {
+    inline-size: 100%;
+    counter-reset: rowNumber;
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+  }
+
+  /* Каждая строка в теле таблицы увеличивает счетчик на 1 */
+  tbody tr {
+    counter-increment: rowNumber;
+  }
+
+  /* Выводим номер в первую ячейку каждой строки */
+  tbody tr td:first-child::before {
+    content: counter(rowNumber);
+  }
+
+  th {
+    background-color: #333;
+    text-align: left;
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+
+  td {
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
 }
