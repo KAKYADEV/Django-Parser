@@ -45,6 +45,7 @@ def start_background_parse(pk):
             images = result['images'],
             seo_score = seo_points,
             images_preview = imgs_prev,
+            headers_overview = seo_points['header_info'][1],
         )
 
         site.status = ReqSite.Site.DONE
