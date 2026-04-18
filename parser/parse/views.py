@@ -98,6 +98,7 @@ class ParsedDataDetailView(LoginRequiredMixin, DetailView):
         context['site_headers'] = self.object.headers
         context['site_images'] = self.object.images_preview
         context['seo_score'] = self.object.seo_score
+        context['header_overview'] = self.object.headers_overview
         return context
 
 class RegisterUserView(CreateView):

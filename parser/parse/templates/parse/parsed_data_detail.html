@@ -12,10 +12,10 @@
         <li><strong>Title:</strong> {{ site_title }}, <strong>Title SEO score:</strong> {{ seo_score.title_score }} </li>
         <li><strong>Description:</strong> {{ site_description }}, <strong>Description SEO score:</strong> {{ seo_score.description_score }} </li>
         <li><strong>Keywords:</strong> {{ site_keywords }}, <strong>Keywords SEO score:</strong> {{ seo_score.keywords_score }} </li>
-        <li><strong>Headers (Headers SEO score: {{ seo_score.header_score }}):</strong>
+        <li><strong>Headers (Headers SEO score: {{ seo_score.header_info.0 }}):</strong>
             <ul>
-                {% for header in site_headers %}
-                    <li><strong>h{{ header.level }}:</strong> {{ header.text }}</li>
+                {% for overview in header_overview %}
+                    <li>{{ overview }}</li>
                 {% endfor %}
             </ul>
         </li>
