@@ -9,7 +9,7 @@
                 <th>№</th>
                 <th>Website</th>
                 <th>URL</th>
-                <th>Result</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
@@ -20,9 +20,14 @@
                 <td><a href="{{site.url}}">{{site.url}}</a></td>
                 <td>
                     {% if site.parsed_data %}
-                        <a href="{% url 'parsed_data_detail' site.parsed_data.id %}">Check result</a>
+                        Done,<a href="{% url 'parsed_data_detail' site.parsed_data.id %}">check result</a>
                     {% else %}
-                        No results
+                        {% if site.status == "captcha" %}
+                            Captcha challenge
+                        {% endif %}
+                        {% if site.status == "error" %}
+                            Unknown Error
+                        {% endif %}
                     {% endif %}
                 </td>
             </tr>
