@@ -45,6 +45,7 @@ class ParsedData(models.Model):
     images = models.JSONField(default=list)
     images_preview = models.JSONField(default=list)
     seo_score = models.JSONField(default=dict)
+    headers_overview = models.JSONField(default=list)
 
 
     def __str__(self):
