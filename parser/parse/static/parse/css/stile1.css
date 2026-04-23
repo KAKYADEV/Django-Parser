@@ -166,4 +166,8 @@
     padding: 8px;
     border: 1px solid #ddd;
   }
+
+  p {
+     margin: 0 0 1rem 0;
+  }
 }
