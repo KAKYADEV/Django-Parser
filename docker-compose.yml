@@ -1,0 +1,32 @@
+services:
+  redis-broker:
+    image: redis:7
+    container_name: redis-broker
+    ports:
+      - "6379:6379"
+  django-app:
+    volumes:
+      - D:/code/django-parser/parser/db.sqlite3:/django-parser/parser/db.sqlite3
+    build: .
+    container_name: django-app
+    ports:
+      - "8000:8000"
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      DEBUG: ${DEBUG}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS}
+    env_file:
+      - .env
+  celery-worker:
+    volumes:
+      - D:/code/django-parser/parser/db.sqlite3:/django-parser/parser/db.sqlite3
+    shm_size: "1gb"
+    build: .
+    container_name: celery-worker
+    command: celery -A parser worker --loglevel=info
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      DEBUG: ${DEBUG}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS}
+    env_file:
+      - .env
