@@ -11,22 +11,21 @@ tasks_logger = logging.getLogger(__name__)
 
 @shared_task
 def start_background_parse(pk):
-    site = ReqSite.objects.get(pk=pk)
-    site.status = ReqSite.Site.PROCESSING
-    site.save(update_fields=['status'])
-
-    tasks_logger.info(f"Задача парсинга запущена для сайта с ID: {pk}")
-
     try:
+        site = ReqSite.objects.get(pk=pk)
+        site.status = ReqSite.Site.PROCESSING
+        site.save(update_fields=['status'])
+    
         parser = Parser(site.url)
+        tasks_logger.info(f"Задача парсинга запущена для сайта с ID: {pk}")
         result = parser.run()
         seo_points = seo_counter(result)
         imgs_prev = img_storage(result, seo_points['imgs_score'])
-    except TimeoutException as e:
+    except TimeoutException:
         site.status = ReqSite.Site.CAPTCHA
         site.save(update_fields=['status'])
         tasks_logger.exception("TimeoutException", exc_info=True)
-    except ParserError as e:
+    except ParserError:
         site.status = ReqSite.Site.ERROR
         site.save(update_fields=['status'])
         tasks_logger.exception("ParserError", exc_info=True)
@@ -52,4 +51,4 @@ def start_background_parse(pk):
         site.save(update_fields=['status'])
         tasks_logger.info(f"Задача парсинга выполнена для сайта с ID: {pk}")
 
-        return 'success'
+        return 'success'    
