@@ -57,5 +57,8 @@ EXPOSE 8000
 # Collect static files
 RUN python manage.py collectstatic --noinput
 
+# Run Django’s production server
+CMD ["gunicorn", "parser.wsgi:application", "--bind", "0.0.0.0:8000"]
+
 # Run Django’s development server
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
