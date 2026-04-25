@@ -1,0 +1,33 @@
+{% extends 'parse/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ header }}</h1>
+    <ul>
+        <li><strong>Site name:</strong> {{ parsed_data.site.name }}</li>
+        <li><strong>URL:</strong> {{ parsed_data.site.url }}</li>
+        <li><strong>Time request:</strong> {{ time_start }}</li>
+        <li><strong>Time response:</strong> {{ time_end }}</li>
+        <li><strong>Duration:</strong> {{ duration_time }}</li>
+        <li><strong>Title:</strong> {{ site_title }}, <strong>Title SEO score:</strong> {{ seo_score.title_score }} </li>
+        <li><strong>Description:</strong> {{ site_description }}, <strong>Description SEO score:</strong> {{ seo_score.description_score }} </li>
+        <li><strong>Keywords:</strong> {{ site_keywords }}, <strong>Keywords SEO score:</strong> {{ seo_score.keywords_score }} </li>
+        <li><strong>Headers (Headers SEO score: {{ seo_score.header_info.0 }}):</strong>
+            <ul>
+                {% for overview in header_overview %}
+                    <li>{{ overview }}</li>
+                {% endfor %}
+            </ul>
+        </li>
+        <li><strong>Images (Images SEO score: {{ seo_score.imgs_score }}):</strong>
+            <ul>
+                {% for image in site_images %}
+                    <li>src: {{ image.src }}, alt: {{ image.alt }}, {{ image.status }} example</li>
+                {% endfor %}
+            </ul>
+        </li>
+            <li><strong>SEO Score:</strong> {{ seo_score.seo_score }}/5</li>
+    </ul>
+    <a href="{% url 'req_site_list' %}">Request list</a>
+</div>
+{% endblock %}

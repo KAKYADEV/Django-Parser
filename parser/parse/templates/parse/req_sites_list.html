@@ -1,0 +1,40 @@
+{% extends 'parse/base.html' %}
+
+{% block content %}
+<div class="table-container">
+    <h1>{{ header }}</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Website</th>
+                <th>URL</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for site in sites %}
+            <tr>
+                <td></td>
+                <td>{{ site.name }}</td>
+                <td><a href="{{site.url}}">{{site.url}}</a></td>
+                <td>
+                    {% if site.parsed_data %}
+                        Done,<a href="{% url 'parsed_data_detail' site.parsed_data.id %}">check result</a>
+                    {% else %}
+                        {% if site.status == "captcha" %}
+                            Captcha challenge
+                        {% endif %}
+                        {% if site.status == "error" %}
+                            Unknown Error
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+                <p>{{ empty_message }}</p>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,173 @@
+@layer reset, layout, components;
+
+@layer reset {
+    * {
+        box-sizing: border-box;
+        margin: 0;
+    }
+
+    input, button, textarea, select {
+        font: inherit;
+    }
+
+    html {
+        color-scheme: dark;
+    }
+}
+
+@layer layout {
+  .container {
+    max-inline-size: 1000px;
+    margin-inline: auto;
+    margin-bottom: 1rem;
+    padding-inline: 1rem;
+  }
+
+  .login-container {
+    display: grid;
+    place-content: center;
+  }
+
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-inline: auto;
+    margin-bottom: 1rem;
+    padding-inline: 1rem;
+  }
+
+  .table-container {
+    inline-size: 1000px;
+    margin-inline: auto;
+    margin-bottom: 1rem;
+    padding-inline: 1rem;
+  }
+
+  .error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-inline: auto;
+    margin-bottom: 1rem;
+    padding-inline: 1rem;
+  }
+
+  body {
+    display: grid;
+    grid-template-rows: auto 1fr; 
+    min-height: 100vh;
+    margin: 0;
+    background-color: black;
+  }
+}
+
+@layer components {
+  header {
+    background-color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: 1rem;
+  }
+
+  nav {
+    display: flex;
+    width: 100%;
+    align-items: center;
+  }
+
+  a {
+    color: white;
+    text-decoration: underline;
+    margin-inline: 0.5rem;
+  }
+
+  h1 {
+    margin: 1rem 0 1rem 0;
+  }
+
+  h2 {
+     margin: 1rem 0 0.25rem 0;
+  }
+
+  button {
+    padding: 5px 20px 5px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    align-items: flex-start;
+  }
+
+  input {
+    width: 300px;
+    font-size: 16px;
+  }
+
+  label {
+    display: inline-block;
+    min-width: 50px;
+    vertical-align: top;
+  }
+
+  .login-section {
+    display: flex;
+    margin-left: auto;
+    font-size: 1.5em;
+  }
+
+  .navigation {
+    color: white;
+    text-decoration: underline;
+    display: flex;
+    margin-inline-start: 3rem;
+    font-size: 1.5em;
+  }
+
+  li {
+      margin: 0.5rem;
+      font-size: 16px;
+  }
+
+  table {
+    inline-size: 100%;
+    counter-reset: rowNumber;
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+  }
+
+  /* Каждая строка в теле таблицы увеличивает счетчик на 1 */
+  tbody tr {
+    counter-increment: rowNumber;
+  }
+
+  /* Выводим номер в первую ячейку каждой строки */
+  tbody tr td:first-child::before {
+    content: counter(rowNumber);
+  }
+
+  th {
+    background-color: #333;
+    text-align: left;
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+
+  td {
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+
+  p {
+     margin: 0 0 1rem 0;
+  }
+}

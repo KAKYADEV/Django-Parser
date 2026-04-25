@@ -1,0 +1,41 @@
+{% extends 'parse/base.html' %}
+
+{% block content %}
+<div class="container">
+
+    {% if site.status == 'processing' or site.status == 'new' %}
+        {% if is_slow %}
+            <div class="loading-container">
+                <h2>{{ header }}</h2>
+                <p>Still analyzing the website… This may take a bit longer than usual.</p>
+                <meta http-equiv="refresh" content="5">
+            </div>
+        {% else %}
+            <div class="loading-container">
+                <h2>{{ header }}</h2>
+                <meta http-equiv="refresh" content="5">
+            </div>
+        {% endif %}
+    {% endif %}
+
+    {% if site.status == 'done' %}
+        <script>
+            window.location.href = "{% url 'parsed_data_detail' site.parsed_data.id %}"
+        </script>
+    {% endif %}
+
+    {% if site.status == 'error' %}
+        <div class="error">
+            An error occurred during parsing. Please try again later.
+            <a class="btn" href="{% url 'index' %}">Home page</a>
+        </div>
+    {% endif %}
+
+    {% if site.status == 'captcha' %}
+        <div class="error">
+            A CAPTCHA challenge is required. Our system is currently unable to solve it. Please try again later.
+            <a class="btn" href="{% url 'index' %}">Home page</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
