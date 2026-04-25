@@ -44,8 +44,6 @@ class Parser:
             images = get_images(soup)
         except TimeoutException:
             parser_logger.exception("TimeoutException", exc_info=True)
-            with open('exc.html', 'a', encoding='utf-8') as f:
-                f.write(driver.page_source)
             raise
         except ParserError:
             parser_logger.exception("ParserError", exc_info=True)
